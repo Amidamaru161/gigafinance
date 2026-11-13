@@ -474,3 +474,26 @@
   text-decoration: line-through;
   opacity: 0.7;
 }
+
+/* Phones: the left tools keep their natural width and the trailing group
+   (model chip) is the one that shrinks, so controls never overlap. */
+@container (max-width: 460px) {
+  .row {
+    gap: 6px;
+  }
+
+  .tools {
+    flex: none;
+    gap: 8px;
+  }
+
+  .modes {
+    gap: 4px;
+  }
+
+  .trailing {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+}

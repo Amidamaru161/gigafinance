@@ -83,3 +83,19 @@ body[data-ds-dark-theme] {
 ::selection {
   background: rgba(139, 92, 246, 0.35);
 }
+
+/* ---- Phones ------------------------------------------------------------ */
+
+/* Composer row: the broker-report chip keeps only its icon when narrow. */
+@container (max-width: 460px) {
+  .gf-portfolio-label {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  /* iOS zooms into inputs below 16px; keep the composer at 16. */
+  textarea {
+    font-size: 16px !important;
+  }
+}

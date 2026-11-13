@@ -117,3 +117,36 @@
 .overlayLayer > * {
   pointer-events: auto;
 }
+
+/* Phones: the chat always keeps the full width. The collapsed sidebar stays a
+   thin rail; an expanded sidebar or an open details pane slides over the chat
+   instead of squeezing it. Inline grid widths are overridden on purpose. */
+@media (max-width: 600px) {
+  .frame {
+    grid-template-columns: 52px minmax(0, 1fr) 0 !important;
+  }
+
+  .frame:not([data-sidebar-collapsed]) {
+    grid-template-columns: 0 minmax(0, 1fr) 0 !important;
+  }
+
+  .frame:not([data-sidebar-collapsed]) .sidebarCol {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: min(300px, 85vw);
+    z-index: 10;
+    box-shadow: 0 0 24px rgba(0, 0, 0, 0.18);
+  }
+
+  .frame:not([data-details-collapsed]) .detailsCol {
+    position: absolute;
+    inset: 0;
+    z-index: 11;
+    border-left: none;
+    background: var(--dsw-alias-bg-base);
+  }
+
+  .handle {
+    display: none;
+  }
+}

@@ -33,6 +33,7 @@ if [ ! -f /etc/gigafinance/secrets.env ]; then
   cat > /etc/gigafinance/secrets.env <<'EOF'
 # Shared by every user instance. Fill in, then run add-user.sh.
 STRIVERSHOP_CLAUDE_API_KEY=
+DEEPSEEK_API_KEY=
 MOEX_MCP_URL=http://127.0.0.1:8765/mcp
 MOEX_MCP_TOKEN=
 EOF
@@ -43,10 +44,15 @@ chmod 640 /etc/gigafinance/secrets.env
 install -m 644 "$APP/deploy/gigafinance@.service" /etc/systemd/system/gigafinance@.service
 systemctl daemon-reload
 
-touch /etc/nginx/gigafinance-users.map /etc/nginx/gigafinance.htpasswd /etc/nginx/gigafinance-tokens.map /etc/nginx/gigafinance-sessions.map
-chmod 600 /etc/nginx/gigafinance-tokens.map /etc/nginx/gigafinance-sessions.map
-chown root:www-data /etc/nginx/gigafinance.htpasswd
-chmod 640 /etc/nginx/gigafinance.htpasswd
+# Login service (deploy/auth/server.mjs): accounts + session signing key.
+install -d -o gigafinance -g gigafinance -m 700 /var/lib/gigafinance/auth
+install -m 644 "$APP/deploy/gigafinance-auth.service" /etc/systemd/system/gigafinance-auth.service
+systemctl daemon-reload
+systemctl enable --now gigafinance-auth
+systemctl restart gigafinance-auth
+# Leftovers of the earlier basic-auth setup.
+rm -f /etc/nginx/gigafinance-users.map /etc/nginx/gigafinance.htpasswd /etc/nginx/gigafinance-tokens.map /etc/nginx/gigafinance-sessions.map
+
 install -m 644 "$APP/deploy/nginx-gigafinance.conf" /etc/nginx/sites-available/gigafinance
 ln -sf /etc/nginx/sites-available/gigafinance /etc/nginx/sites-enabled/gigafinance
 rm -f /etc/nginx/sites-enabled/default

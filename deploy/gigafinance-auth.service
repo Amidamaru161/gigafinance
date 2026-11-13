@@ -1,0 +1,13 @@
+[Unit]
+Description=GigaFinance login service
+After=network.target
+
+[Service]
+User=gigafinance
+Group=gigafinance
+ExecStart=/usr/bin/node /opt/gigafinance/deploy/auth/server.mjs serve
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

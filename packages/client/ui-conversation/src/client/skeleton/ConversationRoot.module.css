@@ -363,3 +363,16 @@
 .root[data-phase='settling'] .composerSeat {
   visibility: hidden;
 }
+
+/* Phones: give the session title the row. The agent-preset badge hides and
+   header utility buttons (Session log) keep only their icon. */
+@media (max-width: 600px) {
+  .headerActions {
+    display: none;
+  }
+
+  .headerUtilities button {
+    font-size: 0;
+    gap: 0;
+  }
+}

@@ -122,7 +122,7 @@ export function PortfolioUploadButton({ sessionId, input }: UploadProps) {
           }}
         >
           <IconChartBarOutline16 size={14} />
-          <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <span className="gf-portfolio-label" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {busy ? 'Читаю…' : view.attached ? `${view.fileName ?? 'Отчёт'}${view.injected === true ? ' · в контексте' : ''}` : 'Портфель'}
           </span>
         </button>

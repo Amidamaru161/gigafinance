@@ -259,3 +259,19 @@
   flex: 0 0 auto;
   color: var(--dsw-alias-label-tertiary);
 }
+
+/* Narrow composer (phones): cap the chip and drop the effort value so the
+   send row keeps fitting. Anonymous container = InputBar .row. */
+@container (max-width: 460px) {
+  .root {
+    min-width: 0;
+  }
+
+  .trigger {
+    max-width: 100%;
+  }
+
+  .triggerEffort {
+    display: none;
+  }
+}

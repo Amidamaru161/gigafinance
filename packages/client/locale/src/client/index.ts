@@ -87,7 +87,7 @@ declare module '@deepseek-ai/cordis' {
 }
 
 /** Fallback locale consulted after the active locale misses (also the last-resort initial locale). */
-export const FALLBACK_LOCALE: LocaleId = 'zh'
+export const FALLBACK_LOCALE: LocaleId = 'en'
 
 /** Shared namespace for shell-level texts. */
 export const COMMON_NS = 'common'
