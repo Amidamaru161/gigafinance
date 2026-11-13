@@ -132,7 +132,7 @@ function serve() {
 
 async function readPassword() {
   if (process.env.GF_PASSWORD) return process.env.GF_PASSWORD
-  process.stdout.write('Пароль: ')
+  if (process.stdin.isTTY) process.stdout.write('Пароль: ')
   let data = ''
   for await (const chunk of process.stdin) { data += chunk; if (data.includes('\n')) break }
   return data.split('\n')[0]
