@@ -107,4 +107,12 @@ fi
 systemctl enable "gigafinance@$login"
 systemctl restart "gigafinance@$login"
 nginx -t && systemctl reload nginx
+
+# Register the user's workspace so the first chat can start right away (idempotent).
+for _ in $(seq 1 30); do
+  curl -s -m10 -X POST -H "Host: localhost:$port" -H 'content-type: application/json' \
+    -d "{\"type\":\"client-request\",\"rpcId\":\"setup\",\"method\":\"workspace.create\",\"payload\":{\"path\":\"$home/workspace\"}}" \
+    "http://127.0.0.1:$port/api/workspace.create" | grep -q '"ok":true' && break
+  sleep 1
+done
 echo "User $login ready on port $port."
