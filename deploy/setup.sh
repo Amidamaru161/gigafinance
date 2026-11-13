@@ -7,7 +7,7 @@
 set -euo pipefail
 
 REPO_URL="${REPO_URL:-https://github.com/Amidamaru161/gigafinance.git}"
-BRANCH="${BRANCH:-best_1128}"
+BRANCH="${BRANCH:-main}"
 APP=/opt/gigafinance
 
 apt-get update
@@ -22,7 +22,7 @@ id gigafinance >/dev/null 2>&1 || useradd --system --create-home --home-dir /var
 mkdir -p /var/lib/gigafinance/users /etc/gigafinance
 
 if [ -d "$APP/.git" ]; then
-  git -C "$APP" fetch origin && git -C "$APP" checkout "$BRANCH" && git -C "$APP" pull --ff-only
+  git config --global --add safe.directory "$APP"; git -C "$APP" fetch "$REPO_URL" "$BRANCH" && git -C "$APP" checkout -B "$BRANCH" FETCH_HEAD
 else
   git clone --branch "$BRANCH" "$REPO_URL" "$APP"
 fi
