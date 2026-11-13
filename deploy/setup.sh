@@ -43,7 +43,8 @@ chmod 640 /etc/gigafinance/secrets.env
 install -m 644 "$APP/deploy/gigafinance@.service" /etc/systemd/system/gigafinance@.service
 systemctl daemon-reload
 
-touch /etc/nginx/gigafinance-users.map /etc/nginx/gigafinance.htpasswd
+touch /etc/nginx/gigafinance-users.map /etc/nginx/gigafinance.htpasswd /etc/nginx/gigafinance-tokens.map /etc/nginx/gigafinance-sessions.map
+chmod 600 /etc/nginx/gigafinance-tokens.map /etc/nginx/gigafinance-sessions.map
 chown root:www-data /etc/nginx/gigafinance.htpasswd
 chmod 640 /etc/nginx/gigafinance.htpasswd
 install -m 644 "$APP/deploy/nginx-gigafinance.conf" /etc/nginx/sites-available/gigafinance

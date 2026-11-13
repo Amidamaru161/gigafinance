@@ -11,12 +11,27 @@ MAP=/etc/nginx/gigafinance-users.map
 HTPASSWD=/etc/nginx/gigafinance.htpasswd
 USERS=/var/lib/gigafinance/users
 SECRETS=/etc/gigafinance/secrets.env
+TOKENS=/etc/nginx/gigafinance-tokens.map
+SESSIONS=/etc/nginx/gigafinance-sessions.map
+touch "$TOKENS" "$SESSIONS"
+chmod 600 "$TOKENS" "$SESSIONS"
+
+# Session cookie token (authenticates the WebSocket upgrades); rotated on
+# every add/password reset so old cookies stop working.
+drop_token() {
+  local old
+  old=$(awk -v u="$1" '$1==u {gsub(";","",$2); print $2}' "$TOKENS")
+  sed -i "/^$1 /d" "$TOKENS"
+  [ -n "$old" ] && sed -i "/^$old /d" "$SESSIONS"
+  return 0
+}
 
 if [ "${1:-}" = "--remove" ]; then
   login="${2:?login}"
   systemctl disable --now "gigafinance@$login" || true
   htpasswd -D "$HTPASSWD" "$login" || true
   sed -i "/^$login /d" "$MAP"
+  drop_token "$login"
   nginx -t && systemctl reload nginx
   echo "Removed $login (data kept in $USERS/$login)."
   exit 0
@@ -36,6 +51,11 @@ else
   while grep -q " $port;" "$MAP"; do port=$((port + 1)); done
   echo "$login $port;" >> "$MAP"
 fi
+
+drop_token "$login"
+token=$(openssl rand -hex 32)
+echo "$login $token;" >> "$TOKENS"
+echo "$token $port;" >> "$SESSIONS"
 
 mkdir -p "$home/dsh/profiles/web" "$home/workspace"
 cat > "$home/instance.env" <<EOF
