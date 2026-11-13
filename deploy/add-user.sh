@@ -11,7 +11,7 @@ APP=/opt/gigafinance
 USERS=/var/lib/gigafinance/users
 SECRETS=/etc/gigafinance/secrets.env
 ACCOUNTS=/var/lib/gigafinance/auth/users.json
-AUTH="sudo -u gigafinance /usr/bin/node $APP/deploy/auth/server.mjs"
+AUTH="sudo -u gigafinance GF_ALLOW_SHORT=${GF_ALLOW_SHORT:-0} /usr/bin/node $APP/deploy/auth/server.mjs"
 
 port_of() {
   [ -f "$ACCOUNTS" ] && node -e "const u=require('$ACCOUNTS')['$1']; if(u) console.log(u.port)" || true

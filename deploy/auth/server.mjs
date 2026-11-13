@@ -143,7 +143,7 @@ if (cmd === 'serve') serve()
 else if (cmd === 'set-user') {
   if (!/^[a-z][a-z0-9_-]{1,31}$/.test(login ?? '') || !Number(port)) throw new Error('usage: set-user <login> <port>')
   const password = await readPassword()
-  if (password.length < 8) throw new Error('password must be at least 8 characters')
+  if (password.length < 8 && process.env.GF_ALLOW_SHORT !== '1') throw new Error('password must be at least 8 characters')
   const salt = randomBytes(16).toString('hex')
   writeUsers({ ...readUsers(), [login]: { salt, hash: hashPassword(password, salt), port: Number(port) } })
   console.log(`user ${login} -> port ${port}`)
