@@ -46,6 +46,14 @@ systemctl daemon-reload
 
 # Login service (deploy/auth/server.mjs): accounts + session signing key.
 install -d -o gigafinance -g gigafinance -m 700 /var/lib/gigafinance/auth
+# Registration and the admin page create accounts through a root-owned copy
+# of add-user.sh (the repo copy is writable by the service account, so it is
+# never what sudo runs); this one command is all the service may sudo.
+install -o root -g root -m 755 "$APP/deploy/add-user.sh" /usr/local/sbin/gigafinance-provision
+echo 'gigafinance ALL=(root) NOPASSWD: /usr/local/sbin/gigafinance-provision' > /tmp/gigafinance.sudoers
+visudo -cf /tmp/gigafinance.sudoers
+install -o root -g root -m 440 /tmp/gigafinance.sudoers /etc/sudoers.d/gigafinance
+rm -f /tmp/gigafinance.sudoers
 install -m 644 "$APP/deploy/gigafinance-auth.service" /etc/systemd/system/gigafinance-auth.service
 systemctl daemon-reload
 systemctl enable --now gigafinance-auth
@@ -58,4 +66,5 @@ ln -sf /etc/nginx/sites-available/gigafinance /etc/nginx/sites-enabled/gigafinan
 rm -f /etc/nginx/sites-enabled/default
 nginx -t && systemctl reload nginx
 
-echo "Done. Fill /etc/gigafinance/secrets.env, then: $APP/deploy/add-user.sh <login>"
+echo "Done. Fill /etc/gigafinance/secrets.env, then create the first admin:"
+echo "  $APP/deploy/add-user.sh <login> && sudo -u gigafinance node $APP/deploy/auth/server.mjs set-admin <login> on"
