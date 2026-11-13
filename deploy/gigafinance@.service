@@ -1,0 +1,18 @@
+# One dsh web instance per GigaFinance user: systemctl enable --now gigafinance@<user>
+# Port and paths come from /var/lib/gigafinance/users/<user>/instance.env.
+[Unit]
+Description=GigaFinance (dsh web) for %i
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=gigafinance
+Group=gigafinance
+EnvironmentFile=/var/lib/gigafinance/users/%i/instance.env
+WorkingDirectory=/var/lib/gigafinance/users/%i/workspace
+ExecStart=/usr/bin/node /opt/gigafinance/apps/cli/lib/bin.js web --port ${GF_PORT}
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
