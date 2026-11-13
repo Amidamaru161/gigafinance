@@ -1,0 +1,85 @@
+/* GigaFinance skin, styled after the GigaChat 3.1 key visual: deep violet-black
+ * space, neon violet as the primary, cyan and lime as accents. Loaded after
+ * design-platform.css and overrides only token values, so every component
+ * picks it up without code changes. Delete the import in web/src/base.css to
+ * return to the stock palette. */
+
+body {
+  --giga-violet: rgb(139, 92, 246);
+  --giga-violet-strong: rgb(124, 58, 237);
+  --giga-violet-soft: rgb(237, 228, 255);
+  --giga-cyan: rgb(34, 211, 238);
+  --giga-lime: rgb(190, 242, 100);
+  --giga-pink: rgb(232, 121, 249);
+  --giga-gradient: linear-gradient(135deg, var(--giga-cyan) 0%, var(--giga-violet) 50%, var(--giga-pink) 100%);
+
+  /* "deepseek" brand ramp re-pointed to violet */
+  --dsw-static-deepseek-50: rgb(245, 240, 255);
+  --dsw-static-deepseek-100: rgb(237, 228, 255);
+  --dsw-static-deepseek-200: rgb(221, 205, 255);
+  --dsw-static-deepseek-300: rgb(196, 170, 253);
+  --dsw-static-deepseek-400: rgb(167, 139, 250);
+  --dsw-static-deepseek-450: rgb(152, 113, 248);
+  --dsw-static-deepseek-500: rgb(139, 92, 246);
+  --dsw-static-deepseek-600: rgb(124, 58, 237);
+  --dsw-static-deepseek-800: rgb(76, 29, 149);
+  --dsw-static-deepseek-900: rgb(46, 16, 101);
+
+  --dsw-alias-bg-base: rgb(252, 250, 255);
+  --dsw-alias-bg-layer-1: rgb(255, 255, 255);
+  --dsw-alias-brand-primary: var(--giga-violet-strong);
+  --dsw-alias-brand-primary-new-colorprimary-new-color: var(--giga-violet);
+  --dsw-alias-brand-text: var(--giga-violet-strong);
+  --dsw-alias-button-primary-hover: rgb(109, 40, 217);
+  --dsw-alias-label-primary-bluish: var(--giga-violet-strong);
+  --dsw-alias-interactive-bg-hover: rgba(124, 58, 237, 0.06);
+  --dsw-alias-interactive-bg-active: rgba(124, 58, 237, 0.12);
+  --dsw-alias-interactive-bg-hover-accent: rgba(124, 58, 237, 0.16);
+  --dsw-specific-sidebar-fill: rgb(246, 242, 255);
+  --dsw-specific-sidebar-nav-item-hover: rgba(124, 58, 237, 0.07);
+  --dsw-specific-sidebar-nav-item-active: rgba(124, 58, 237, 0.13);
+  --dsw-specific-sidebar-nav-item-active-accent: var(--giga-violet-soft);
+  --dsw-specific-bubble: rgb(241, 233, 255);
+  --dsw-specific-bubble-highlight: rgb(221, 205, 255);
+}
+
+body[data-ds-dark-theme] {
+  --dsw-alias-bg-base: rgb(11, 8, 22);
+  --dsw-alias-bg-layer-1: rgb(19, 14, 36);
+  --dsw-alias-bg-layer-2: rgb(27, 20, 50);
+  --dsw-alias-bg-layer-3: rgb(36, 27, 66);
+  --dsw-alias-bg-overlay: rgb(52, 40, 92);
+  --dsw-alias-bg-module-platform: rgb(30, 23, 56);
+  --dsw-alias-border-l1: rgba(167, 139, 250, 0.10);
+  --dsw-alias-border-l2: rgba(167, 139, 250, 0.16);
+  --dsw-alias-border-l2-darkmode-thin: rgba(167, 139, 250, 0.16);
+  --dsw-alias-border-l3: rgba(167, 139, 250, 0.22);
+  --dsw-alias-border-l4: rgba(167, 139, 250, 0.30);
+  --dsw-alias-brand-primary: rgb(167, 139, 250);
+  --dsw-alias-brand-primary-new-colorprimary-new-color: rgb(167, 139, 250);
+  --dsw-alias-brand-text: var(--giga-cyan);
+  --dsw-alias-button-primary-hover: rgb(196, 170, 253);
+  --dsw-alias-label-primary-bluish: var(--giga-cyan);
+  --dsw-alias-interactive-bg-hover: rgba(167, 139, 250, 0.08);
+  --dsw-alias-interactive-bg-active: rgba(167, 139, 250, 0.14);
+  --dsw-alias-interactive-bg-hover-accent: rgba(167, 139, 250, 0.20);
+  --dsw-alias-markdown-code-block: rgb(19, 14, 36);
+  --dsw-alias-markdown-code-block-banner: rgb(27, 20, 50);
+  --dsw-alias-markdown-inline-code: rgba(167, 139, 250, 0.16);
+  --dsw-alias-tooltip-bg: rgb(36, 27, 66);
+  --dsw-alias-toast-bg: rgb(36, 27, 66);
+  --dsw-specific-input-major: rgb(19, 14, 36);
+  --dsw-specific-menu: rgb(27, 20, 50);
+  --dsw-specific-sidebar-fill: rgb(14, 10, 28);
+  --dsw-specific-sidebar-nav-item-hover: rgba(167, 139, 250, 0.08);
+  --dsw-specific-sidebar-nav-item-active: rgba(167, 139, 250, 0.16);
+  --dsw-specific-sidebar-nav-item-active-accent: rgba(167, 139, 250, 0.22);
+  --dsw-specific-bubble: rgba(139, 92, 246, 0.22);
+  --dsw-specific-bubble-highlight: rgba(139, 92, 246, 0.36);
+  --dsw-specific-selector: rgb(27, 20, 50);
+  --dsw-specific-tip: rgb(27, 20, 50);
+}
+
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+}

@@ -1,0 +1,1 @@
+$ node --import tsx/esm apps/cli/src/bin.ts "--profile" "web"

@@ -1,0 +1,136 @@
+/* Geometry mirrors CodeBlock/TerminalBlock/WebBlock (12px radius,
+   code-block surface, 16px vertical margin) so a chart card reads as one
+   family with them. The SVG scales to the card width via the viewBox; axis
+   text inherits the card's font. Series colors are theme tokens applied as
+   `currentColor` through the .seriesN classes, so every element's stroke/fill
+   stays a CSS concern and the component holds no literal colors. */
+
+.block {
+  --dsl-chart-radius: 12px;
+
+  margin: 16px 0;
+  padding: 12px 14px;
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-markdown-code-block);
+  border-radius: var(--dsl-chart-radius);
+}
+
+.title {
+  margin-bottom: 8px;
+  color: var(--dsw-alias-label-primary);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* The plot and the pie legend sit side by side; the SVG flexes to fill. */
+.plotRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-width: 0;
+}
+
+/* The pie legend is a compact column beside the ring. */
+.plotRow .legend {
+  flex: none;
+  max-width: 40%;
+  flex-direction: column;
+}
+
+.legend {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+}
+
+.legendItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.legendDot {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.legendName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--dsw-alias-label-secondary);
+  font: var(--dsw-font-xs-13);
+}
+
+/* The series palette: five distinct hues cycled past the palette size. */
+.series0 {
+  color: var(--dsw-static-deepseek-500);
+}
+
+.series1 {
+  color: var(--dsw-static-blue-500);
+}
+
+.series2 {
+  color: var(--dsw-static-green-500);
+}
+
+.series3 {
+  color: var(--dsw-static-amber-500);
+}
+
+.series4 {
+  color: var(--dsw-static-red-500);
+}
+
+/* Chart bodies draw through currentColor so the palette class owns the hue. */
+.line,
+.point {
+  stroke: currentColor;
+}
+
+.point {
+  fill: currentColor;
+}
+
+.bar {
+  fill: currentColor;
+}
+
+/* Axis chrome: the shared subdued ink for ticks, captions, and gridlines. */
+.axisText {
+  fill: var(--dsw-alias-label-tertiary);
+  font-size: 11px;
+}
+
+.axisCaption {
+  fill: var(--dsw-alias-label-secondary);
+  font-size: 12px;
+}
+
+.axisLine {
+  stroke: var(--dsw-alias-border-l2);
+}
+
+.grid {
+  stroke: var(--dsw-alias-border-l2);
+  stroke-dasharray: none;
+}
+
+.empty {
+  color: var(--dsw-alias-label-secondary);
+  font: var(--dsw-font-xs-13);
+}
