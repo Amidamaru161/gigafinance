@@ -79,7 +79,11 @@ EOF
 chmod 600 "$home/dsh/profiles/web/cordis.patch.yml"
 chown -R gigafinance:gigafinance "$home"
 
-htpasswd -B "$HTPASSWD" "$login"
+if [ -n "${GF_PASSWORD:-}" ]; then
+  htpasswd -bB "$HTPASSWD" "$login" "$GF_PASSWORD"
+else
+  htpasswd -B "$HTPASSWD" "$login"
+fi
 systemctl enable "gigafinance@$login"
 systemctl restart "gigafinance@$login"
 nginx -t && systemctl reload nginx
